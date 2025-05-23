@@ -1,0 +1,93 @@
+{
+    "intents": {
+        "greeting": {
+            "patterns": [
+                "hi", "hello", "hey", "good morning", "good evening",
+                "hi there", "hello there", "greetings", "what's up"
+            ],
+            "responses": [
+                "Hello! I'm your AI shopping assistant. How can I help you today?",
+                "Hi there! Looking for something specific?",
+                "Welcome! I'm here to help you find the perfect items!"
+            ]
+        },
+        "show_products": {
+            "patterns": [
+                "show me {gender} {category}",
+                "display {gender} {category}",
+                "what {category} do you have for {gender}",
+                "i want to see {gender} {category}",
+                "{gender} {category}",
+                "show me men tops",
+                "show me mens tops",
+                "show me women tops",
+                "show me womens tops",
+                "show me top for men",
+                "show me top for women"
+            ],
+            "responses": [
+                "Here's our collection of {gender}'s {category}!",
+                "Check out these amazing {category} from our {gender}'s collection!",
+                "We have a great selection of {gender}'s {category} available!"
+            ]
+        },
+        "product_inquiry": {
+            "patterns": [
+                "tell me about this product",
+                "product details",
+                "more information",
+                "what are the features",
+                "product description",
+                "specifications",
+                "tell me more"
+            ],
+            "responses": [
+                "I'll be happy to tell you more about this product.",
+                "Let me share the details with you.",
+                "Here's what you should know about this item."
+            ]
+        },
+        "price_inquiry": {
+            "patterns": [
+                "how much is it",
+                "what's the price",
+                "cost",
+                "price details",
+                "is it expensive",
+                "tell me the price",
+                "show me prices"
+            ],
+            "responses": [
+                "Let me check the price for you.",
+                "I'll show you the pricing details.",
+                "Here are the price details."
+            ]
+        },
+        "help": {
+            "patterns": [
+                "help",
+                "what can you do",
+                "how do you work",
+                "guide me",
+                "instructions",
+                "what should i do"
+            ],
+            "responses": [
+                "I can help you:\n• Browse products by category\n• Find specific items\n• Get product details\n• Check prices",
+                "You can ask me to:\n• Show products (e.g., 'show men's shoes')\n• Get product information\n• Check prices",
+                "Try asking me to:\n• Show you products\n• Find specific items\n• Get details about items"
+            ]
+        }
+    },
+    "entities": {
+        "gender": ["men", "women", "mens", "womens", "men's", "women's"],
+        "category": ["tops", "shoes", "belts", "watches"],
+        "attributes": ["price", "color", "size", "material", "brand"],
+        "actions": ["show", "find", "search", "display", "browse", "check"]
+    },
+    "context_rules": {
+        "remember_gender": true,
+        "remember_category": true,
+        "suggestions_enabled": true
+    }
+}
