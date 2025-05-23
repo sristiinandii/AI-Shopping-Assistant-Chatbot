@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Site - Simplified</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .nav {
+      margin-left: 30px;
+    }
+
+    .nav ul {
+      list-style-type: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav ul li {
+      display: inline;
+    }
+
+    .nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .nav ul li a:hover {
+      color: #e91e63;
+    }
+
+    .search-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      width: 250px;
+      margin-right: 10px;
+    }
+
+    .search-btn {
+      padding: 8px 15px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background-color: #c2185b;
+    }
+
+    .middle-section {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .middle-section img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Section / Header -->
+  <header class="header">
+    <!-- Logo and Navigation -->
+    <div class="logo-nav">
+      <div class="logo">
+        <img src="https://assets.myntassets.com/flash/desktop/web-v5/images/logo.png" alt="Logo" />
+      </div>
+      <nav class="nav">
+        <ul>
+          <li><a href="#">Women</a></li>
+          <li><a href="#">Men</a></li>
+          <li><a href="#">Sale</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Search Bar Section -->
+    <div class="search-section">
+      <input type="text" placeholder="Search for products..." class="search-bar">
+      <button class="search-btn">Search</button>
+    </div>
+  </header>
+
+  <!-- Middle Section (Image Section) -->
+  <section class="middle-section">
+    <img src="https://via.placeholder.com/1200x400.png?text=Featured+Shopping+Products" alt="Featured Shopping Products">
+  </section>
+
+</body>
+</html>

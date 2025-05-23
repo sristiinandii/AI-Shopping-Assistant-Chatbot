@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>E-COMMERCE WEBSITE | CREATED BY SRISTI NANDI</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://yt3.ggpht.com/a/AGF-l78km1YyNXmF0r3-0CycCA0HLA_i6zYn_8NZEg=s900-c-k-c0xffffffff-no-rj-mo" type="image/gif" sizes="16x16"/>
+
+  <!-- Font Awesome & Fonts -->
+  <script src="https://kit.fontawesome.com/4a3b1f73a2.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
+
+  <!-- Slick Carousel CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"/>
+
+  <style>
+    body {
+      font-family: 'Lato', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    header, footer {
+      background-color: #2e2c2f;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .slider-container {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    .slick-slide img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .content {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .products-section {
+      padding: 40px 20px;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product-card h4 {
+      margin: 10px 0 5px;
+      font-size: 16px;
+    }
+
+    .product-card p {
+      color: #555;
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 40px;
+    }
+
+    footer a {
+      margin: 0 8px;
+      font-size: 18px;
+      color: lightblue;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>E-Commerce Website</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- SLIDER -->
+  <div class="slider-container" id="containerSlider">
+    <div><img src="/static/images/img1.png" alt="Left Image"></div>
+    <div><img src="/static/images/img2.png" alt="Right Image"></div>
+    <div><img src="/static/images/img4.png" alt="Center Image"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <section class="content">
+    <h2>Welcome to Our E-Commerce Store</h2>
+    <p>Browse our categories and find the best deals on your favorite products. Our store offers a wide range of items from electronics to fashion, all in one place.</p>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section">
+    <h2>Featured Products</h2>
+    <div class="products" id="all-products"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 E-Commerce by Sristi | All rights reserved.</p>
+    <p>Follow us: 
+      <a href="#"><i class="fab fa-facebook"></i></a> 
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </p>
+  </footer>
+
+  <!-- JS: jQuery + Slick -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#containerSlider').slick({
+        dots: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1500
+      });
+    });
+  </script>
+
+  <!-- JS: Products -->
+  <script>
+    const products = {
+      men: {
+        tops: [
+          { name: "Men's Classic T-Shirt", image: "/static/images/mens_classic_tshirt.avif", price: "₹599" },
+          { name: "Men's Polo Shirt", image: "/static/images/mens_polo_shirt.avif", price: "₹799" },
+          { name: "Men's Formal Shirt", image: "/static/images/mens_formal_shirt.webp", price: "₹999" }
+        ],
+        belts: [
+          { name: "Leather Belt Brown", image: "/static/images/leather_belt_brown.jpg", price: "₹799" },
+          { name: "Canvas Belt", image: "/static/images/canvas_belt.jpg", price: "₹499" }
+        ],
+        shoes: [
+          { name: "Men's Running Shoes", image: "/static/images/mens_running_shoes.avif", price: "₹2499" },
+          { name: "Men's Casual Sneakers", image: "/static/images/mens_casual_sneakers.webp", price: "₹1599" }
+        ],
+        watches: [
+          { name: "Men's Sports Watch", image: "/static/images/mens_sports_watch.jpg", price: "₹2999" },
+          { name: "Men's Formal Watch", image: "/static/images/mens_formal_watch.webp", price: "₹4999" }
+        ]
+      },
+      women: {
+        tops: [
+          { name: "Women's Blouse", image: "/static/images/womens_blouse.avif", price: "₹799" },
+          { name: "Women's T-Shirt", image: "/static/images/womens_tshirt.jpg", price: "₹499" }
+        ],
+        belts: [
+          { name: "Leather Belt Black", image: "/static/images/leather_belt_black.avif", price: "₹899" }
+        ],
+        shoes: [
+          { name: "Women's High Heels", image: "/static/images/womens_high_heels.avif", price: "₹1999" },
+          { name: "Women's Flats", image: "/static/images/womens_flats.jpg", price: "₹799" }
+        ],
+        watches: [
+          { name: "Women's Silver Watch", image: "/static/images/womens_silver_watch.jpg", price: "₹3499" },
+          { name: "Women's Fashion Watch", image: "/static/images/womens_fashion_watch.jpg", price: "₹1599" }
+        ]
+      }
+    };
+
+    const allProductsContainer = document.getElementById("all-products");
+
+    for (const category in products) {
+      for (const type in products[category]) {
+        products[category][type].forEach(product => {
+          const card = document.createElement("div");
+          card.className = "product-card";
+          card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h4>${product.name}</h4>
+            <p>${product.price}</p>
+          `;
+          allProductsContainer.appendChild(card);
+        });
+      }
+    }
+  </script>
+</body>
+</html>

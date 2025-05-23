@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .product-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-details {
+      text-align: center;
+    }
+
+    .product-details h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .product-details p {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .buy-now-btn, .add-to-cart-btn, .wishlist-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 18px;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .buy-now-btn {
+      background-color: #007bff;
+    }
+
+    .buy-now-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .add-to-cart-btn {
+      background-color: #28a745;
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: #218838;
+    }
+
+    .wishlist-btn {
+      background-color: #ff5733;
+    }
+
+    .wishlist-btn:hover {
+      background-color: #d94324;
+    }
+
+    .additional-links {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .additional-links a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .additional-links a:hover {
+      text-decoration: underline;
+    }
+
+    .product-specs, .product-description {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-specs ul, .product-description ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .product-specs li, .product-description li {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    .product-specs li span, .product-description li span {
+      font-weight: bold;
+    }
+
+    .share-btn {
+      padding: 15px 30px;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    .share-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Rating and Reviews Section */
+    .rating-section, .reviews-section {
+      margin-top: 40px;
+    }
+
+    .stars {
+      display: inline-block;
+    }
+
+    .stars input {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 30px;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: #ffb400;
+    }
+
+    .review-box {
+      margin-top: 20px;
+    }
+
+    .review-box textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      resize: vertical;
+      height: 120px;
+    }
+
+    .submit-review-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .submit-review-btn:hover {
+      background-color: #218838;
+    }
+
+    .review-list {
+      margin-top: 20px;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .review-item {
+      margin-bottom: 15px;
+    }
+
+    .review-item p {
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="product-wrapper">
+      <!-- Product image -->
+      <img id="product-image" class="product-image" src="" alt="Product Image">
+      
+      <!-- Product details -->
+      <div class="product-details">
+        <h2 id="product-name">Product Name</h2>
+        <p id="product-price">₹0</p>
+        <a id="buy-now-btn" class="buy-now-btn" href="#" onclick="redirectToBuyPage()">Buy Now</a>
+        <!-- Add to Cart and Wishlist Buttons -->
+        <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+        <button class="wishlist-btn" onclick="addToWishlist()">Add to Wishlist</button>
+      </div>
+    </div>
+
+    <!-- Product Specifications -->
+    <div class="product-specs">
+      <h3>Product Specifications</h3>
+      <ul>
+        <li><span>Colour:</span> White Gold</li>
+        <li><span>Brand:</span> RIZIK STORE</li>
+        <li><span>Product Dimensions:</span> 119D x 22W x 73H Centimeters</li>
+        <li><span>Maximum Weight Recommendation:</span> 150 Kilograms</li>
+        <li><span>Frame Material:</span> Iron</li>
+        <li><span>Product Care Instructions:</span> Dry Clean</li>
+        <li><span>Shape:</span> Rectangular</li>
+        <li><span>Table Design:</span> Console Table</li>
+        <li><span>Style:</span> RS-CTW</li>
+        <li><span>Finish Type:</span> Lacquered Gold</li>
+        <li><span>Item Weight:</span> 10 Kilograms</li>
+        <li><span>Top Material Type:</span> Engineered Wood</li>
+      </ul>
+    </div>
+
+    <!-- Product Description -->
+    <div class="product-description">
+      <h3>About This Item</h3>
+      <ul>
+        <li><span>Dimensions:</span> 119L x 22B x 73H (cm) - Proudly 100% made in India with skilled artisans</li>
+        <li><span>Charming industrial style:</span> Vintage marble tone paired with a streamlined metal frame for a versatile addition to any home decor.</li>
+        <li><span>Ample storage:</span> Features 2 tier planks providing ample room to conceal small item clutter, keeping your space tidy.</li>
+        <li><span>Solid construction:</span> Crafted with high-grade materials and a gold metal frame, ensuring sturdy, durable, and long-lasting use.</li>
+        <li><span>Easy to install:</span> Detailed, step-by-step assembly instructions ensure a hassle-free assembly process, allowing you to enjoy your new furniture with ease.</li>
+        <li><span>Long Life:</span> Rust-proof, durable, and easily transferable.</li>
+      </ul>
+    </div>
+
+    <!-- Rating Section -->
+    <div class="rating-section">
+      <h3>Product Rating</h3>
+      <div class="stars">
+        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+      </div>
+      <p>Average Rating: 4.5 (Based on 200 reviews)</p>
+    </div>
+
+    <!-- Customer Reviews Section -->
+    <div class="reviews-section">
+      <h3>Customer Reviews</h3>
+      
+      <div class="review-box">
+        <textarea id="review-text" placeholder="Write your review here..."></textarea>
+        <button class="submit-review-btn" onclick="submitReview()">Submit Review</button>
+      </div>
+
+      <div class="review-list">
+        <div class="review-item">
+          <p><strong>John Doe:</strong> Great product! Highly recommend it.</p>
+        </div>
+        <div class="review-item">
+          <p><strong>Jane Smith:</strong> Very sturdy and stylish. Worth the price!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional links -->
+    <div class="additional-links" style="text-align: center;">
+      <a href="/">Go Back to Products</a>
+    </div>
+
+    <!-- Share Button -->
+    <button class="share-btn" onclick="shareProduct()">Share</button>
+  </div>
+
+  <script>
+    // Function to get URL parameters
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        name: params.get("name"),
+        price: params.get("price"),
+        image: params.get("image")
+      };
+    }
+
+    // Display product details
+    const productDetails = getQueryParams();
+    document.getElementById("product-image").src = productDetails.image || "https://via.placeholder.com/400";
+    document.getElementById("product-image").alt = productDetails.name || "Product Image";
+    document.getElementById("product-name").innerText = productDetails.name || "Unnamed Product";
+    document.getElementById("product-price").innerText = productDetails.price || "Price not available";
+
+    // Create the productQuery string here, so it is accessible in all functions
+    const productQuery = `name=${encodeURIComponent(productDetails.name)}&price=${encodeURIComponent(productDetails.price)}&image=${encodeURIComponent(productDetails.image)}`;
+
+    // Function to redirect to the buy page
+    function redirectToBuyPage() {
+      window.location.href = `/cart?${productQuery}`;
+    }
+
+    // Function to handle adding to cart
+    function addToCart() {
+      window.location.href = `/cart?${productQuery}`;
+    }
+
+    // Function to handle adding to wishlist
+    function addToWishlist() {
+      window.location.href = `/wishlist?${productQuery}`;
+    }
+
+    // Universal Share Function
+    function shareProduct() {
+      if (navigator.share) {
+        navigator.share({
+          title: document.getElementById("product-name").innerText,
+          text: "Check out this amazing product!",
+          url: window.location.href
+        })
+        .then(() => console.log('Successfully shared'))
+        .catch((error) => console.error('Error sharing:', error));
+      } else {
+        const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+      }
+    }
+
+    // Function to submit a review
+    function submitReview() {
+      const reviewText = document.getElementById("review-text").value;
+      if (reviewText) {
+        const newReview = document.createElement("div");
+        newReview.classList.add("review-item");
+        newReview.innerHTML = `<p><strong>You:</strong> ${reviewText}</p>`;
+        document.querySelector(".review-list").prepend(newReview);
+        document.getElementById("review-text").value = '';
+      } else {
+        alert("Please write a review before submitting.");
+      }
+    }
+  </script>
+</body>
+</html>

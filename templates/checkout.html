@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    h2, h3, h4 {
+      text-align: center;
+      color: #333;
+    }
+    .checkout-header, .checkout-total, .payment-methods, .order-summary {
+      margin-bottom: 20px;
+    }
+    .checkout-item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .checkout-item img {
+      width: 80px;
+      height: auto;
+      margin-right: 15px;
+    }
+    .checkout-actions button {
+      padding: 15px 30px;
+      background-color: #ff9900;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .checkout-actions button:hover {
+      background-color: #e68900;
+    }
+    .upi-details {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Checkout</h2>
+    <div class="checkout-header">
+      <h3>Your Order Summary</h3>
+      <p>Total Items: <span id="item-count">0</span></p>
+    </div>
+    <div id="checkout-content"></div>
+    <div class="checkout-total">
+      <span>Total:</span>
+      <span id="total-price">₹0.00</span>
+    </div>
+    <div class="payment-methods">
+      <h4>Select Payment Method</h4>
+      <label><input type="radio" name="payment-method" value="Cash on Delivery" checked onclick="toggleUpiField()"> Cash on Delivery</label><br>
+      <label><input type="radio" name="payment-method" value="UPI" onclick="toggleUpiField()"> UPI</label><br>
+      <label><input type="radio" name="payment-method" value="Credit Card" onclick="toggleUpiField()"> Credit Card</label><br>
+      <label><input type="radio" name="payment-method" value="Debit Card" onclick="toggleUpiField()"> Debit Card</label><br>
+      <div class="upi-details" id="upi-details">
+        <label for="upi-id">Enter UPI ID:</label>
+        <input type="text" id="upi-id" placeholder="Enter your UPI ID">
+      </div>
+    </div>
+    <div class="checkout-actions">
+      <button onclick="completeCheckout()">Complete Checkout</button>
+    </div>
+    <div class="order-summary">
+      <h4>Order Summary</h4>
+      <ul>
+        <li><strong>Shipping Address:</strong> <span id="shipping-address">N/A</span></li>
+        <li><strong>Payment Method:</strong> <span id="selected-payment-method">N/A</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function getCart() {
+      return JSON.parse(localStorage.getItem("cart")) || [];
+    }
+
+    function displayCheckout() {
+      const checkoutContent = document.getElementById("checkout-content");
+      const totalElement = document.getElementById("total-price");
+      const itemCount = document.getElementById("item-count");
+      const cart = getCart();
+
+      if (cart.length === 0) {
+        checkoutContent.innerHTML = `<p>Your cart is empty.</p>`;
+        totalElement.textContent = "₹0.00";
+        itemCount.textContent = "0";
+        return;
+      }
+
+      checkoutContent.innerHTML = cart.map(item => `
+        <div class="checkout-item">
+          <img src="${item.image}" alt="${item.name}">
+          <div>
+            <h4>${item.name}</h4>
+            <p>Price: ₹${item.price}</p>
+          </div>
+        </div>
+      `).join("");
+
+      const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+      totalElement.textContent = `₹${total.toFixed(2)}`;
+      itemCount.textContent = cart.length;
+    }
+
+    function completeCheckout() {
+  const cart = getCart();
+  const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+  const upiId = document.getElementById("upi-id").value;
+  const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0).toFixed(2);
+
+  if (paymentMethod === "UPI" && !upiId) {
+    alert("Please enter your UPI ID.");
+    return;
+  }
+
+  const order = {
+    items: cart,
+    paymentMethod: paymentMethod,
+    total: total
+  };
+
+  fetch('/place_order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(order)
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.message);
+    localStorage.removeItem("cart");
+    window.location.href = "thankyou";
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+
+
+    function toggleUpiField() {
+      const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+      const upiDetails = document.getElementById("upi-details");
+      upiDetails.style.display = paymentMethod === "UPI" ? "block" : "none";
+    }
+
+    displayCheckout();
+  </script>
+</body>
+</html>

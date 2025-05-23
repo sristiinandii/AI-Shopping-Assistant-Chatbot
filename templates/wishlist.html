@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Wishlist Items */
+    .wishlist-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding-bottom: 20px;
+    }
+
+    .wishlist-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .wishlist-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .wishlist-item img {
+      width: 100%;
+      height: auto;
+      max-height: 250px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+
+    .wishlist-details {
+      text-align: center;
+    }
+
+    .wishlist-details h3 {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .wishlist-details p {
+      font-size: 16px;
+      color: #555;
+      margin: 5px 0;
+    }
+
+    .remove-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .remove-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    /* Links Section */
+    .additional-links {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .additional-links a {
+      font-size: 16px;
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .additional-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .wishlist-items {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .wishlist-item {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .wishlist-items {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Your Wishlist</h2>
+    <div id="wishlist-container" class="wishlist-items">
+      <!-- Wishlist items will be added here dynamically -->
+    </div>
+
+    <!-- Additional links -->
+    <div class="additional-links">
+      <a href="/">Go Back to Products</a>
+    </div>
+  </div>
+
+  <script>
+    // Function to get URL parameters
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        name: params.get("name"),
+        price: params.get("price"),
+        image: params.get("image")
+      };
+    }
+
+    // Function to add product to the wishlist
+    function addToWishlist() {
+      const productDetails = getQueryParams();
+      if (!productDetails.name || !productDetails.price || !productDetails.image) {
+        return; // No product details, exit
+      }
+
+      // Get stored wishlist from localStorage
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+      // Check if product already exists
+      const exists = wishlist.some(item => item.name === productDetails.name);
+      if (!exists) {
+        wishlist.push(productDetails);
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      }
+    }
+
+    // Function to load wishlist items
+    function loadWishlist() {
+      const wishlistContainer = document.getElementById("wishlist-container");
+      wishlistContainer.innerHTML = "";
+
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+      if (wishlist.length === 0) {
+        wishlistContainer.innerHTML = "<p style='text-align:center; font-size:18px; color:#555;'>Your wishlist is empty.</p>";
+        return;
+      }
+
+      wishlist.forEach((product, index) => {
+        const itemHTML = `
+          <div class="wishlist-item" data-index="${index}">
+            <img src="${product.image}" alt="${product.name}">
+            <div class="wishlist-details">
+              <h3>${product.name}</h3>
+              <p>Price: ₹${product.price}</p>
+            </div>
+            <button class="remove-btn" onclick="removeFromWishlist(${index})">Remove</button>
+          </div>
+        `;
+        wishlistContainer.innerHTML += itemHTML;
+      });
+    }
+
+    // Function to remove item from wishlist
+    function removeFromWishlist(index) {
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      wishlist.splice(index, 1); // Remove item at index
+      localStorage.setItem("wishlist", JSON.stringify(wishlist)); // Update storage
+      loadWishlist(); // Reload list
+    }
+
+    // Run addToWishlist() if redirected from product page
+    if (window.location.search) {
+      addToWishlist();
+    }
+
+    // Load wishlist on page load
+    loadWishlist();
+  </script>
+</body>
+</html>

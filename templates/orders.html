@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order History</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .order-item {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+    }
+    .order-details {
+      margin-bottom: 10px;
+    }
+    .items {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .item {
+      background: #fafafa;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 150px;
+    }
+    .item img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Your Orders</h2>
+    <div id="order-history"></div>
+  </div>
+
+  <script>
+    function getOrders() {
+      return fetch("/get_orders")    // Fetch from Flask backend
+    .then(response => response.json())
+    .catch(error => {
+      console.error("Error fetching orders:", error);
+      return [];
+    });
+}
+
+function displayOrders() {
+  const orderHistory = document.getElementById("order-history");
+
+  getOrders().then(orders => {
+    if (orders.length === 0) {
+      orderHistory.innerHTML = `<p>No orders found.</p>`;
+      return;
+    }
+
+    orderHistory.innerHTML = orders.map((order, index) => `
+      <div class="order-item" data-index="${index}">
+        <div class="order-details">
+          <h4>Order Date: ${order.date}</h4>
+          <p>Payment Method: ${order.paymentMethod}</p>
+          <p>Status: ${order.status}</p>
+          <button onclick="removeOrder(${index})">Remove Order</button>
+        </div>
+        <div class="items">
+          ${order.items.map(item => `
+            <div class="item">
+              <img src="${item.image}" alt="${item.name}">
+              <h4>${item.name}</h4>
+              <p>Price: ₹${item.price}</p>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  });
+}
+
+function removeOrder(index) {
+  fetch(`/remove_order/${index}`, { method: 'DELETE' })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.message);
+      displayOrders();  // Refresh after deletion
+    });
+}
+
+displayOrders();
+</script></body></html>

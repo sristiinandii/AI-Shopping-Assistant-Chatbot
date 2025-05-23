@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - {{ product.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        .product-detail {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+        .product-detail img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+        }
+        .product-detail .info {
+            max-width: 500px;
+        }
+        .product-detail h1 {
+            color: #333;
+        }
+        .product-detail p {
+            color: #666;
+            font-size: 16px;
+        }
+        .product-detail .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .product-detail .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .product-detail .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="product-detail">
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+        <div class="info">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+            <p class="price">₹{{ product.price }}</p>
+            <button class="button" onclick="alert('Virtual Try-On feature coming soon!')">Try On</button>
+        </div>
+    </div>
+
+</body>
+</html>
